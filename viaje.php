@@ -84,4 +84,10 @@ Implementar un script testViaje.php que cree una instancia de la clase Viaje y p
         $this->setApellido_6($apellidoV);
         $this->setnDoc_7($dniV);
     }
+    public function __toSting1(){
+        return "Nombre: ".$this->getNombre()."Apellido: ".$this->getApellido()."N°Doc".$this->getnDoc();
+    }
+    public function __toSting2(){
+        return "Codigo de Viaje: /n". $this->getCodigo()."Destino: /n". $this->getDestino()."Cantidad Maxima: /n". $this->getCantMaxPasajeros();
+    }
  }
