@@ -13,12 +13,16 @@ Volver a implementar las operaciones que permiten modificar el nombre, apellido 
     private $Apellido;
     private $numDoc;
     private $telefono;
+    private $nAsiento;
+    private $nTiket;
 
-    public function __construct($name,$lastname,$dni,$numTel){
+    public function __construct($name,$lastname,$dni,$numTel,$numAsiento,$numTiket){
         $this->Nombre=$name;
         $this->Apellido=$lastname;
         $this->numDoc=$dni;
         $this->telefono=$numTel;
+        $this->nAsiento=$numAsiento;
+        $this->nTiket=$numTiket;
     }
     public function getNombre(){
         return $this->Nombre;
@@ -32,11 +36,19 @@ Volver a implementar las operaciones que permiten modificar el nombre, apellido 
     public function getTelefono(){
         return $this->telefono;
     }
+    public function getnAsiento(){
+        return $this->nAsiento;
+    }
+    public function getnTiket(){
+        return $this->nTiket;
+    }
     public function __toString(){
         return " Nombre Pasajero: ".$this->getNombre().
         "\n Apellido Pasajero: ". $this->getApellido().
         "\n Dni Pasajero: ". $this->getDni().
-        "\n Telefono Pasajero: ". $this->getTelefono();
+        "\n Telefono Pasajero: ". $this->getTelefono().
+        "\n Numero de Asiento: ". $this->getnAsiento().  
+        "\n Numero de Tiket: ". $this->getnTiket();;
     }
     public function setNombre($name){
         $this->Nombre=$name;
@@ -50,6 +62,15 @@ Volver a implementar las operaciones que permiten modificar el nombre, apellido 
     public function setTelefono($telf){
         $this->telefono=$telf;
     }
-
+    public function setnAsiento($numAsiento){
+        return $this->nAsiento=$numAsiento;
+    }
+    public function setnTiket($numTiket){
+        return $this->nTiket=$numTiket;
+    }
+    public function darPorcentajeIncremento($valorPasaje){
+        $PasajeConIncremento=$valorPasaje*1.1;
+        return $PasajeConIncremento;
+    }
 
  }

@@ -11,83 +11,109 @@ Realice la implementación de la clase Viaje e implemente los métodos necesario
 Implementar un script testViaje.php que cree una instancia de la clase Viaje y presente un menú que permita
  cargar la información del viaje, modificar y ver sus datos*/
 
- class viajeFeliz{
+ class Viaje{
     private $codigo;
     private $destino;
     private $cantMaxPasajeros;
-    private $pasajeros;
-    private $nombre;
-    private $apellido;
-    private $nDoc;
-
-    function __construct($codigoViaje,$destinoViaje,$cantPasajeros,$pasajerosViaje,$unNombre,$unApellido,$dni){
-        $this->$codigo=$codigoViaje;
-        $this->$destino=$destinoViaje;
-        $this->$cantMaxPasajeros=$cantPasajeros;
-        $this->$pasajeros=$pasajerosViaje;
-        $this->$nombre=$unNombre;
-        $this->$apellido=$unApellido;
-        $this->$nDoc=$dni;
+    private $objPasajeros;
+    private $objResponsable;
+    private $costoViaje;
+    private $sumaCostos;
+    
+    public function __construct($codigoViaje,$destinoViaje,$cantPasajeros,$objColPasajeros,$objResp,$costo,$acumCostos){
+        $this->codigo=$codigoViaje;
+        $this->destino=$destinoViaje;
+        $this->cantMaxPasajeros=$cantPasajeros;
+        $this->objPasajeros=$objColPasajeros;
+        $this->objResponsable=$objResp;
+        $this->$costoViaje=$costo;
+        $this->$sumaCostos=$acumCostos;
     }
 
     public function getCodigo(){
-        return $this-> $codigo;
+        return $this->codigo;
     }
     public function getDestino(){
-        return $this->$destino;
+        return $this->destino;
     }
     public function getCantMaxPasajeros(){
-        return $this->$cantMaxPasajeros;
+        return $this->cantMaxPasajeros;
     }
-    public function getPasajeros(){
-        return $this->$pasajeros;
+    public function getColObjPasajeros(){
+        return $this->objPasajeros;
     }
-    public function getNombre(){
-        return $this->$nombre;
+    public function getObjResps(){
+        return $this->objResponsable;
     }
-    public function getApellido(){
-        return $this->$apellido;
+    public function getcostoViaje(){
+        return $this->costoViaje;
     }
-    public function getnDoc(){
-        return $this->$nDoc;
+    public function getsumaCostos(){
+        return $this->sumaCostos;
     }
     public function setCodigo_1($nuevoCodigo){
-       return $this->$codigo=$nuevoCodigo;
+       $this->codigo=$nuevoCodigo;
     }
     public function setDestino_2($nuevoDestino){
-        return $this->$destino=$nuevoDestino;
+        $this->destino=$nuevoDestino;
     }
     public function setCantPasajeros_3($nuevaCantPasajeros){
-        return $this->$cantMaxPasajeros=$nuevaCantPasajeros;
+        $this->cantMaxPasajeros=$nuevaCantPasajeros;
     }
-    public function setPasajeros_4($nuevoPasajero){
-        return $this->$pasajeros=$nuevoPasajero;
+    public function setColObjPasajeros_4($nuevoObjPasajero){
+        $this->objPasajeros=$nuevoObjPasajero;
     }
-    public function setNombre_5($nuevoNombre){
-        return $this->$nombre=$nuevoNombre;
+    public function setObjResp_5($nuevoObjResp){
+        $this->objResponsable=$nuevoObjResp;
     }
-    public function setApellido_6($nuevoApellido){
-        return $this->$apellido=$nuevoApellido;
+    public function setcostoViaje_6($costo){
+        $this->costoViaje=$costo;
     }
-    public function setnDoc_7($nuevoDni){
-        return $this->$nDoc=$nuevoDni;
+    public function setsumaCostos_7($acumCostos){
+        $this->sumaCostos=$acumCostos;
     }
-
-    public function nuevoViaje($codigoV,$destinoV,$pasajMax,$pasaj){
+    public function nuevoViaje($codigoV,$destinoV,$pasajMax,$ObjPasaj,$objResp){
         $this->setCodigo_1($codigoV);
         $this->setDestino_2($destinoV);
         $this->setCantPasajeros_3($pasajMax);
-        $this->setPasajeros_4($pasaj);
+        $this->setPasajeros_4($ObjPasaj);
+        $this->setObjResp_5($objResp);
     }
     public function nuevoPasajero($nombreV,$apellidoV,$dniV){
         $this->setNombre_5($nombreV);
         $this->setApellido_6($apellidoV);
         $this->setnDoc_7($dniV);
     }
-    public function __toSting1(){
-        return "Nombre: ".$this->getNombre()."Apellido: ".$this->getApellido()."N°Doc".$this->getnDoc();
+    public function __toString1(){
+        return print_r($this->getPasajeros());
     }
-    public function __toSting2(){
-        return "Codigo de Viaje: /n". $this->getCodigo()."Destino: /n". $this->getDestino()."Cantidad Maxima: /n". $this->getCantMaxPasajeros();
+    public function __toString(){
+        return " Codigo de Viaje: ".$this->getCodigo().
+        "\n Destino: ".$this->getDestino().
+        "\n Cantidad pasajeros: ".$this->getCantMaxPasajeros();
+    }
+    public function  hayPasajesDisponible(){
+        $Maximo=$this->getCantMaxPasajeros();
+        $colPasajeros=$this->getColObjPasajeros();
+        $ocupados=count($colPasajeros);
+        $asiento=false;
+        if ($Maximo>$ocupados) {
+            $asiento=true;
+        }
+        return $asiento;
+    }
+
+    public function venderPasaje($objPasajero){
+        $asiento=hayPasajesDisponible();
+        $colPasajeros=$this->getColObjPasajeros();
+        $venta=false;
+        if ($asiento==true) {
+            $colPasajeros[count($colPasajeros)]=$objPasajero;
+            $this->setColObjPasajeros_4($colPasajeros);
+            $venta=darPorcentajeIncremento($this->getcostoViaje());
+            $costo=$this->getsumaCostos();
+            $this->setsumaCostos_7($venta+$costo);
+        }
+        return $venta;
     }
  }

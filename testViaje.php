@@ -72,17 +72,17 @@ include_once ("Pasajeros.php");
                             echo "ingrese nuevo destino \n";
                             $destino=trim(fgets(STDIN));
                             $objViaje-> setDestino_2($destino);
-                            $objViaje->__toString();
+                            echo $objViaje->__toString()."\n";
                         }
                         if ($modificacion==2) {
                             echo "ingrese nuevo Cantidad Maxima \n";
                             $cantMax=trim(fgets(STDIN));
                             $objViaje-> setCantPasajeros_3($cantMax);
-                            $objViaje->__toString();
+                            echo $objViaje->__toString()."\n";
                         }
                         if ($modificacion==3) {
                             echo" Ingrese el Nombre del nuevo Responsable del viaje: ";
-                            $nameResponsable=trim(fgest(STDIN));
+                            $nameResponsable=trim(fgets(STDIN));
                             $ObjResponsable->setNombre($nameResponsable);
                             echo "Ingrese el Apellido del nuevo Responsable del viaje: ";
                             $ApellidoResp=trim(fgets(STDIN));
@@ -93,6 +93,7 @@ include_once ("Pasajeros.php");
                             echo "Ingrese el N° de empleado del nuevo Responsable del viaje: ";
                             $Nempleado=trim(fgets(STDIN));
                             $ObjResponsable->setNumEmpleado($Nempleado);
+                            echo $ObjResponsable."\n";
                         }
                    }else {
                     echo "el codigo no se encuentra \n";
@@ -129,6 +130,7 @@ include_once ("Pasajeros.php");
                             echo "ingrese nuevo nombre \n";
                             $nombre=trim(fgets(STDIN));
                             $objPasajero->setNombre($nombre);
+                            echo $objPasajero-> __toString();
                             $arrayColeccion[$posicion]=$objPasajero;
                             $objViaje->setColObjPasajeros_4($arrayColeccion);
                         }
@@ -136,6 +138,7 @@ include_once ("Pasajeros.php");
                             echo "ingrese nuevo apellido \n";
                             $apellido=trim(fgets(STDIN));
                             $objPasajero->setApellido($apellido);
+                            echo $objPasajero-> __toString();
                             $arrayColeccion[$posicion]=$objPasajero;
                             $objViaje->setColObjPasajeros_4($arrayColeccion);
                         }
@@ -143,6 +146,7 @@ include_once ("Pasajeros.php");
                             echo "ingrese nuevo dni \n";
                             $dni=trim(fgets(STDIN));
                             $objPasajero->setDni($dni);
+                            echo $objPasajero-> __toString();
                             $arrayColeccion[$posicion]=$objPasajero;
                             $objViaje->setColObjPasajeros_4($arrayColeccion);
                         }
@@ -150,6 +154,7 @@ include_once ("Pasajeros.php");
                             echo "ingrese nuevo Telefono \n";
                             $tel=trim(fgets(STDIN));
                             $objPasajero->setTelefono($tel);
+                            echo $objPasajero-> __toString();
                             $arrayColeccion[$posicion]=$objPasajero;
                             $objViaje->setColObjPasajeros_4($arrayColeccion);
                             
@@ -167,7 +172,7 @@ include_once ("Pasajeros.php");
                 echo "Ingrese el numero de la opcion: \n";
                 $ver=trim(fgets(STDIN));
                 if ($ver==1) {
-                    $objViaje->__toString();
+                    echo $objViaje->__toString()."\n";
                 }
                 if ($ver==2) {
                     echo "ingrese DNI del pasajero que desea ver: \n";
@@ -180,7 +185,7 @@ include_once ("Pasajeros.php");
                         $objPasajero=$arrayColeccion[$i];
                         if ($objPasajero->getDni()==$doc) {
                            $bandera=true;
-                           $objPasajero->__toString();
+                           echo $objPasajero->__toString()."\n";
                         }
                         else{
                             $bandera=false;
@@ -189,12 +194,12 @@ include_once ("Pasajeros.php");
                     }
                 }
                 if ($ver==3) {
-                    $ObjResponsable->__toString();
+                    echo $ObjResponsable->__toString()."\n";
                 }
             }
         echo "marque [1] para volver al menu o [4] para salir: \n";
         $seleccion1=trim(fgets(STDIN));
         }while ($seleccion1==1|| $seleccion1==2 || $seleccion1==3);
-        $objViaje->__toString();
+        echo $objViaje->__toString();
         
         
