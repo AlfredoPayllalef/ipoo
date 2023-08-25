@@ -1,0 +1,43 @@
+body{
+    padding: 0px;
+    margin: 0px;
+    position: relative;
+    padding-bottom: 80px;
+    overflow-x: hidden;
+}
+#footer{
+    height: 250px;
+    width: 100%;
+    background-color: lightgrey;
+
+    position: fixed;
+    bottom: 0;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+
+    
+    display: flex;
+    justify-content: space-between;
+
+    animation: Animacion2 5s ease-in-out infinite alternate both;
+}
+#nombres{
+    color: #047cac;
+    padding: 0.5em;
+    vertical-align: middle;
+    font-weight: bold;
+}
+
+#nombres a{
+    font-size: 13px;
+    text-decoration: none;
+}
+
+#info{
+    color: #047cac;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    font-size: 1.25rem;
+    
+}

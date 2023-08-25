@@ -1,0 +1,30 @@
+public function insertarViaje(){
+
+        $baseDeDatos = new BaseDatos();
+
+        $empresa = $this->get_obj_idempresa();
+
+        $idempresa = $empresa->get_idempresa();
+
+        $responsable = $this->get_obj_numeroempleado();
+
+        $nroEmpleado = $responsable->get_nro_empleado();
+
+        $consultaInsert = "INSERT INTO viaje (idviaje,vdestino,vcantmaxpasajeros,idempresa,rnumeroempleado,vimporte)
+        VALUES (". $this->get_idviaje().",'". $this->get_vdestino(). "',". $this->get_vcantmaxpasajeros().",". $idempresa.",". $nroEmpleado.",". $this->get_vimporte().")";
+
+        $resultado = false; 
+
+        if($baseDeDatos->Iniciar()){
+            if($baseDeDatos->Ejecutar($consultaInsert)){
+                $resultado = true;
+            }else{
+                $this->set_mensajeOperacion($baseDeDatos->getError());
+            }
+        }else{
+            $this->set_mensajeOperacion($baseDeDatos->getError());
+        }
+
+        return $resultado;
+
+    }

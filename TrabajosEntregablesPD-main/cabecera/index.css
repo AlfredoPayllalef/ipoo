@@ -1,0 +1,31 @@
+.dropdown{
+    display: inline;
+    font-size: 1.25rem;
+}
+
+.dropdown-item{
+    color: #047cac ;
+}
+.nav-link.dropdown-toggle, .navbar-brand{
+    color: #047cac ;
+    font-weight: bold;
+}
+.dropdown{
+    color: #047cac ;
+    display: inline;
+    font-size: 1.25rem;
+}
+
+a{
+    text-decoration: none !important;
+    color: #047cac !important;
+    font-weight: bold;
+}
+
+#header{
+    background-color: lightgrey;
+   }
+   
+   .bg-light{
+       background-color: lightgrey !important;
+   }

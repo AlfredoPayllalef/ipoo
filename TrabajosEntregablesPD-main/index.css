@@ -1,0 +1,70 @@
+
+.dropdown-item{
+    color: #047cac ;
+}
+.nav-link.dropdown-toggle, .navbar-brand{
+    color: #047cac ;
+    font-weight: bold;
+}
+.dropdown{
+    color: #047cac ;
+    display: inline;
+    font-size: 1.25rem;
+}
+
+h1{
+    margin-top: 50px;
+    text-align: center;
+    color: #047cac ;
+    background-color: white;
+}
+
+body {
+
+    /* Ubicación de la imagen */
+    
+    background-image: url(img/LOGO-UNCO-PNG.png);
+    
+    /* Para dejar la imagen de fondo centrada, vertical y
+    
+    horizontalmente */
+    
+    background-position: center center;
+    
+    /* Para que la imagen de fondo no se repita */
+    
+    background-repeat: no-repeat;
+    
+    /* La imagen se fija en la ventana de visualización para que la altura de la imagen no supere a la del contenido */
+    
+    background-attachment: fixed;
+    
+    /* La imagen de fondo se reescala automáticamente con el cambio del ancho de ventana del navegador */
+    
+    background-size: contain;
+
+    
+    
+    /* Se muestra un color de fondo mientras se está cargando la imagen
+    
+    de fondo o si hay problemas para cargarla */
+    
+    
+    
+    }
+.ejercicios{
+    background-color: white !important;
+}
+
+#header{
+ background-color: var(--gris) !important;
+}
+
+.bg-light{
+    background-color: var(--gris) !important;
+}
+
+:root{
+    --principal: #047cac;
+    --gris: lightgrey;
+}
