@@ -3,17 +3,24 @@ class inscripcion {
     private $id_inscripcion;
     private $fecha;
     private $costo;
+	private $obj_Ingresante; 
+	private $col_Modulos;
    
 
     public function _construct(){
         $this->id_inscripcion="";
         $this->fecha="";
         $this->costo="";
+		$this->obj_Ingresante="";
+		$this->col_Modulos="";
     }
-    public function cargar($idins,$date,$coston){
+    public function cargar($idins,$date,$coston,$objIngresante,$modulos){
         $this->setId_inscripcion($idins);
         $this->setFecha($date);
         $this->setCosto($coston);
+		$this->setObjIngresante($objIngresante);
+		$this->setColModulos($modulos);
+
     }
     //metodos  de acceso
     public function getId_inscripcion(){
@@ -25,6 +32,12 @@ class inscripcion {
     public function getCosto(){
         return $this->costo;
     }
+	public function getObjIngresante(){
+		return $this->obj_Ingresante;
+	}
+	public function getColModulos(){
+		return $this->col_Modulos;
+	}
     
     // metodos para setear
     public function setId_inscripcion($inscripcion){
@@ -36,13 +49,21 @@ class inscripcion {
     public function setCosto($costoN){
         $this->costo=$costoN;
     }
+	public function setObjIngresante($objIngresante){
+		$this->obj_Ingresante=$objIngresante;
+	}
+	public function setColModulos($modulos){
+		$this->col_Modulos=$modulos;
+	}
    
     public function __toString(){
     $cadena="\n=============================================================================\n";
-    $cadena=$cadena."[id de Inscripcion:". $this->getId_inscripcion()"]\n";
-    $cadena=$cadena."[Fecha de inscripcion:". $this->getFecha()"]\n";
-    $cadena=$cadena."[Costo de inscripcion:". $this->getCosto()"]\n";
-    $cadena=$cadena."=============================================================================\n";
+    $cadena.="[id de Inscripcion:". $this->getId_inscripcion()."]\n";
+    $cadena.="[Fecha de inscripcion:". $this->getFecha()."]\n";
+    $cadena.="[Costo de inscripcion:". $this->getCosto()."]\n";
+	$cadena.="[Alumno :". $this->getObjIngresante()."]\n";
+	$cadena.="[Coleccion de Modulos :". $this->getColModulos()."]\n";
+    $cadena.="=============================================================================\n";
     }
 
         /**
@@ -63,8 +84,12 @@ class inscripcion {
 
                     $fecha = $fila['insfecha'];
 					$costo = $fila['inscosto'];
+					$obj_Ingresante=new ingresante(0,0,0,0,0);
+					$obj_Ingresante->Buscar($fila['idni']);
+					$modulo= new modulos;
+					$modulo->listar("inscripcion.midModulos = ".$obj_Ingresante);/// como busco los modulos donde esta inscripto??
 
-                    $this->cargar($id_inscripcion, $fecha, $costo);
+                    $this->cargar($id_inscripcion, $fecha, $costo,$obj_Ingresante);
 
 					$exito = true;
 				}				

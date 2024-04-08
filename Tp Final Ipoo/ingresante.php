@@ -56,12 +56,12 @@ class ingresante {
     // Metodo de lectura
     public function __toString(){
     $cadena="\n=============================================================================\n";
-    $cadena=$cadena."[Nombre:". $this->getNombre()"]\n";
-    $cadena=$cadena."[Apellido:". $this->getApellido()"]\n";
-    $cadena=$cadena."[Correo:". $this->getCorreo()"]\n";
-    $cadena=$cadena."[Legajo:". $this->getLegajo()"]\n";
-    $cadena=$cadena."[Numero de Documento:". $this->getDni()"]\n";
-    $cadena=$cadena."=============================================================================\n";
+    $cadena.="[Nombre:". $this->getNombre()."]\n";
+    $cadena.="[Apellido:". $this->getApellido()."]\n";
+    $cadena.="[Correo:". $this->getCorreo()."]\n";
+    $cadena.="[Legajo:". $this->getLegajo()."]\n";
+    $cadena.="[Numero de Documento:". $this->getDni()."]\n";
+    $cadena.="=============================================================================\n";
     }
 
     /**
@@ -85,7 +85,7 @@ class ingresante {
                     $correo = $fila['icorreo'];
 					$legajo = $fila['ilegajo'];
 
-                    $this->cargar($nombre, $apellido, $correo,$legajo,$dni);
+                    $this->cargar($nombre, $apellido, $correo,$legajo,$dniIngresante);
 
 					$exito = true;
 				}				
@@ -125,13 +125,12 @@ class ingresante {
 		 return $arreglo;
 	}	
 
-    public function insertar(){
-		$base=new BaseDatos();
-		$resp= false;
-		
-		if(parent::insertar()){
-		    $consultaInsertar="INSERT INTO ingresante(idni, inombre)
-				VALUES (".$this->getDni().",'".$this->getNombre()."')";
+	public function insertar(){
+		$base = new BaseDatos();
+		$resp = false;
+
+		$consultaInsertar="INSERT INTO ingresante(inombre,iapellido,icorreo,ilegajo,idni)
+				VALUES (".$this->getNombre().",'".$this->getApellido().",".$this->getCorreo().",".$this->getLegajo().",".$this->getDni()."')";
 		    if($base->Iniciar()){
 		        if($base->Ejecutar($consultaInsertar)){
 		            $resp=  true;
@@ -141,49 +140,43 @@ class ingresante {
 		    } else {
 		        $this->setmensajeoperacion($base->getError());
 		    }
-		 }
 		return $resp;
 	}
 
-    public function modificar(){
-	    $resp =false; 
-	    $base=new BaseDatos();
-	    if(parent::modificar()){
-	        $consultaModifica="UPDATE ingresante SET inombre='".$this->getNombre()."' WHERE idni=". $this->getDni();
-	        if($base->Iniciar()){
-	            if($base->Ejecutar($consultaModifica)){
-	                $resp=  true;
-	            }else{
-	                $this->setmensajeoperacion($base->getError());
-	                
-	            }
-	        }else{
-	            $this->setmensajeoperacion($base->getError());
-	            
-	        }
-	    }
-		
-		return $resp;
+
+	public function modificar(){
+	    $exito = false; 
+	    $base = new BaseDatos();
+
+		$consulta="UPDATE ingresante SET inombre='".$this->getNombre()."', iapellido = '".$this->getApellido().
+		"', icorreo = '".$this->getCorreo().
+		"' WHERE idni=". $this->getDni();
+
+		if($base->Iniciar()){
+			if($base->Ejecutar($consulta)){
+			    $exito =  true;
+			} else {
+                $this->setMensajeOperacion($base->getError());
+            }
+		} else {
+            $this->setMensajeOperacion($base->getError());	
+		}
+		return $exito;
 	}
     
-
-    public function eliminar(){
-		$base=new BaseDatos();
-		$resp=false;
+	public function eliminar(){
+		$base = new BaseDatos();
+		$exito = false;
 		if($base->Iniciar()){
-				$consultaBorra="DELETE FROM ingresante WHERE idni=".$this->getDni();
-				if($base->Ejecutar($consultaBorra)){
-				    if(parent::eliminar()){
-				        $resp=  true;
-				    }
-				}else{
-						$this->setmensajeoperacion($base->getError());
-					
-				}
-		}else{
-				$this->setmensajeoperacion($base->getError());
-			
+			$consultaBorra="DELETE FROM ingresante WHERE idni=".$this->getDni();
+            if($base->Ejecutar($consulta)){
+                $exito = true;
+			} else {
+                $this->setMensajeOperacion($base->getError());
+            }
+		} else {
+            $this->setMensajeOperacion($base->getError());	
 		}
-		return $resp; 
+		return $exito; 
 	}
 }

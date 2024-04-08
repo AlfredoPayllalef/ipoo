@@ -1,6 +1,6 @@
 <?php
 class modulosLinea extends modulos{
-    private $linkReunion;
+    private $linkReunion;	
 
     public function _construct(){
     parent:: _construct();
@@ -19,8 +19,8 @@ class modulosLinea extends modulos{
     }
     public function __toString(){
         $cadena= parent:: __toString();
-        $cadena=$cadena. "\n [Link de la reunion:]".$this->getLinkReunion();
-        $cadena=$cadena. "\n [Costo Online:]".$this->getCosto();
+        $cadena.= "\n [Link de la reunion:]".$this->getLinkReunion();
+        $cadena.= "\n [Costo Online:]".$this->getCosto();
         return $cadena;
     }
 

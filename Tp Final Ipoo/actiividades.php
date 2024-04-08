@@ -3,17 +3,20 @@ class activiades {
     private $idActividad;
     private $descripcionCorta;
     private $descriccionLarga;
+	private $col_modulos;
 
     public function _construct(){
         $this->idActividad="";
         $this->descripcionCorta="";
         $this->descriccionLarga="";
+		$this->col_modulos="";
     }
 
-    public function cargar($id,$dCorta,$dLarga){
+    public function cargar($id,$dCorta,$dLarga,$modulo){
         $this->set_idDescripcion($id);
         $this->setDesCorta($dCorta);
         $this->setDesLarga($dLarga);
+		$this->setColModulos($modulo);
     }
 
     public function get_idDescripcion(){
@@ -25,6 +28,9 @@ class activiades {
     public function getDesLarga(){
         return $this->descriccionLarga;
     }
+	public function getColModulos(){
+        return $this->col_modulos;
+    }
     public function set_idDescripcion($actividad){
         $this->idActividad=$actividad;
     }
@@ -34,12 +40,16 @@ class activiades {
     public function setDesLarga($dLarga){
         $this->descriccionLarga=$dLarga;
     }
+	public function setColModulos(){
+        return $this->col_modulos;
+    }
     public function __toString(){
     $cadena="\n=============================================================================\n";
-    $cadena=$cadena."[id Actividad:". $this->get_idDescripcion()"]\n";
-    $cadena=$cadena."[descripcion Corta:". $this->getDesCorto()"]\n";
-    $cadena=$cadena."[descripcion Larga:". $this->getDesLarga()"]\n";
-    $cadena=$cadena."=============================================================================\n";
+    $cadena.="[id Actividad:". $this->get_idDescripcion()."]\n";
+    $cadena.="[descripcion Corta:". $this->getDesCorto()."]\n";
+    $cadena.="[descripcion Larga:". $this->getDesLarga()."]\n";
+	$cadena.="[Coleccion Modulos:". $this->getColModulos()."]\n";
+    $cadena.="=============================================================================\n";
     }
 
 
@@ -61,6 +71,7 @@ class activiades {
 
                     $descripcionCorta = $fila['adescripcionCorta'];
 					$descriccionLarga = $fila['adescriccionLarga'];
+					$col_modulos = $fila['adescriccionLarga' ] /////
 
                     $this->cargar($idActividad, $descripcionCorta, $descriccionLarga);
 

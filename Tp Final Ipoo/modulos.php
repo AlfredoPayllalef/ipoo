@@ -8,6 +8,7 @@ class modulos {
     private $horarioCierre;
     private $fechaInicio;
     private $fechaFin;
+    private $col_Inscripcion;
 
     public function _construct(){
         $this->idModulos="";
@@ -18,8 +19,9 @@ class modulos {
         $this->horarioCierre="";
         $this->fechaInicio="";
         $this->fechaFin="";
+        $this->col_Inscripcion="";
     }
-    public function cargar($idmod,$descripcion,$tope,$costoN,$hsin,$hsfin,$datein,$datefin){
+    public function cargar($idmod,$descripcion,$tope,$costoN,$hsin,$hsfin,$datein,$datefin,$colInscripcion){
         $this->setModulo($idmod);
         $this->setdescModulo($descripcion);
         $this->setTope($tope);
@@ -28,6 +30,7 @@ class modulos {
         $this->setHsCierre($hsfin);
         $this->setFinicio($datein);
         $this->setFfin($datefin);
+        $this->setColInscripcion($colInscripcion);
     }
     //metodo de acceso
     public function getModulo(){
@@ -54,6 +57,9 @@ class modulos {
     public function getFfin(){
         return $this->fechaFin;
     }
+    public function getColInscripcion(){
+        return $this->col_Inscripcion;
+    }
     //metodo de seteo
     public function setModulo($modulos){
         $this->idModulos=$modulos;
@@ -79,17 +85,21 @@ class modulos {
     public function setFfin($fFin){
         $this->fechaFin=$fFin;
     }
+    public function setColInscripcion($colInscripcion){
+        return $this->col_Inscripcion=$colInscripcion;
+    }
     public function __toString(){
     $cadena="\n=============================================================================\n";
-    $cadena=$cadena."[Id Modulo:". $this->getModulo()"]\n";
-    $cadena=$cadena."[Descripcion Modulo:". $this->getdescModulo()"]\n";
-    $cadena=$cadena."[Tope de Inscripciones:". $this->getTope()"]\n";
-    $cadena=$cadena."[Costo:". $this->getCosto()"]\n";
-    $cadena=$cadena."[Horario Inicio:". $this->getHsInicio()"]\n";
-    $cadena=$cadena."[Horario Cierre:". $this->getHsCierre()"]\n";
-    $cadena=$cadena."[Fecha Inicio:". $this->getFinicio()"]\n";
-    $cadena=$cadena."[Fecha Fin:". $this->getFfin()"]\n";
-    $cadena=$cadena."=============================================================================\n";
+    $cadena.="[Id Modulo:". $this->getModulo()."]\n";
+    $cadena.="[Descripcion Modulo:". $this->getdescModulo()."]\n";
+    $cadena.="[Tope de Inscripciones:". $this->getTope()."]\n";
+    $cadena.="[Costo:". $this->getCosto()."]\n";
+    $cadena.="[Horario Inicio:". $this->getHsInicio()."]\n";
+    $cadena.="[Horario Cierre:". $this->getHsCierre()."]\n";
+    $cadena.="[Fecha Inicio:". $this->getFinicio()."]\n";
+    $cadena.="[Fecha Fin:". $this->getFfin()."]\n";
+    $cadena.="[Coleccion de inscripciones:". $this->getColInscripcion()."]\n";
+    $cadena.="=============================================================================\n";
     }
 
         /**
@@ -103,6 +113,7 @@ class modulos {
     public function Buscar($idModulos){
 		$base = new BaseDatos();
 		$consulta = "SELECT * FROM modulos WHERE midModulos = '".$idModulos."'";
+        $col_Inscripcion=[];
 		$exito = false; 
 		if($base->Iniciar()){
 			if($base->Ejecutar($consulta)){
@@ -115,8 +126,13 @@ class modulos {
                     $horarioCierre = $fila['mhorarioCierre'];
                     $fechaInicio = $fila['mfechaInicio'];
                     $fechaFin=  $fila['mfechaFin'];
+                        
+                    $inscripcion=new inscripcion();
+                    $col_Inscripcion = $inscripcion->listar("inscripcion.midModulos = ".$midModulos);
 
-                    $this->cargar($idModulos, $descripcionModulos, $topePrecio,$costo,$horarioInicio,$horarioCierre,$fechaInicio,$fechaFin);
+
+
+                    $this->cargar($idModulos, $descripcionModulos, $topePrecio,$costo,$horarioInicio,$horarioCierre,$fechaInicio,$fechaFin,$col_Inscripcion);
 
 					$exito = true;
 				}				
@@ -157,64 +173,56 @@ class modulos {
 	}	
 
     public function insertar(){
-		$base=new BaseDatos();
-		$resp= false;
-		
-		if(parent::insertar()){
-		    $consultaInsertar="INSERT INTO modulos(midModulos, mfechaInicio)
-				VALUES (".$this->getModulo().",'".$this->getFinicio()."')";
-		    if($base->Iniciar()){
-		        if($base->Ejecutar($consultaInsertar)){
-		            $resp=  true;
-		        }	else {
-		            $this->setmensajeoperacion($base->getError());
-		        }
-		    } else {
-		        $this->setmensajeoperacion($base->getError());
-		    }
-		 }
-		return $resp;
-	}
+		$base = new BaseDatos();
+		$exito = false;
+        $consulta="INSERT INTO modulos(midModulos,mdescripcionModulos,mtopePrecio,mcosto,mhorarioInicio,mhorarioCierre, mfechaInicio,mfechaFin)
+        VALUES ('".$this->getModulo()."', '".$this->getdescModulo()."', '".$this->getTope()."', '".$this->getHsInicio().
+        "', '".$this->getHsCierre()."', '".$this->getFinicio()."', '".$this->getFfin()."')";
 
-    public function modificar(){
-	    $resp =false; 
-	    $base=new BaseDatos();
-	    if(parent::modificar()){
-	        $consultaModifica="UPDATE modulos SET fechaInicio='".$this->getFinicio()."' WHERE idModulos=". $this->getModulo();
-	        if($base->Iniciar()){
-	            if($base->Ejecutar($consultaModifica)){
-	                $resp=  true;
-	            }else{
-	                $this->setmensajeoperacion($base->getError());
-	                
-	            }
-	        }else{
-	            $this->setmensajeoperacion($base->getError());
-	            
-	        }
-	    }
-		
-		return $resp;
+        // tengo que ingresar la coleeccion de ingresantes???
+
+		if($base->Iniciar()){
+            if($base->Ejecutar($consulta)){
+                $resp=  true;
+            }	else {
+                $this->setmensajeoperacion($base->getError());
+            }
+        } else {
+            $this->setmensajeoperacion($base->getError());
+        }
+		return $exito;
 	}
     
+    public function modificar(){
+	    $exito = false; 
+	    $base = new BaseDatos();
+        // deberia modificar todos los atributos???
+        $consulta="UPDATE modulos SET fechaInicio='".$this->getFinicio()."' WHERE idModulos=". $this->getModulo();
+		if($base->Iniciar()){
+			if($base->Ejecutar($consulta)){
+			    $exito =  true;
+			} else {
+                $this->setMensajeOperacion($base->getError());
+            }
+		} else {
+            $this->setMensajeOperacion($base->getError());	
+		}
+		return $exito;
+	}
 
     public function eliminar(){
-		$base=new BaseDatos();
-		$resp=false;
+		$base = new BaseDatos();
+		$exito = false;
 		if($base->Iniciar()){
-				$consultaBorra="DELETE FROM modulos WHERE idModulos=".$this->getModulo();
-				if($base->Ejecutar($consultaBorra)){
-				    if(parent::eliminar()){
-				        $resp=  true;
-				    }
-				}else{
-						$this->setmensajeoperacion($base->getError());
-					
-				}
-		}else{
-				$this->setmensajeoperacion($base->getError());
-			
+            $consulta="DELETE FROM modulos WHERE idModulos=".$this->getModulo();
+            if($base->Ejecutar($consulta)){
+                $exito = true;
+			} else {
+                $this->setMensajeOperacion($base->getError());
+            }
+		} else {
+            $this->setMensajeOperacion($base->getError());	
 		}
-		return $resp; 
+		return $exito; 
 	}
 }
