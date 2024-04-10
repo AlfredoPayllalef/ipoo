@@ -50,7 +50,7 @@ class viaje{
         $colPasajeros=$this->getColObjPasajeros();
         $cadena="=======================\n";
         for ($i=0; $i <count($colPasajeros) ; $i++) { 
-            $cadena.="|N°".$i."|".$colPasajeros[$i]->__toString()."|\n";
+            $cadena.="|N°".$i."|".$colPasajeros[$i]->__toString()."\n";
         }
         $cadena.="=======================\n";
         return $cadena;
@@ -70,7 +70,7 @@ class viaje{
         $i=0;
         $objPersona=null;
         while ($i<count($arrayPasajeros) && !$bandera ) {
-            $dni=$arrayPasajeros[$i]->getDni();
+            $dni=$arrayPasajeros[$i]->getNumDoc();
             if ($dni==$dniPersona) {
                 $objPersona=$arrayPasajeros[$i];
                 $bandera=true;
@@ -84,10 +84,10 @@ class viaje{
         $cantMaxima=$this->getCanMaxPasajeros();
         $bandera=false;
         $exito=false;
-        $dni=$objPasajero->getDni();
+        $dni=$objPasajero->getNumDoc();
         $i=0;
-        while ($i<=count($pasajeros) && !$bandera) {
-            $eDni=$pasajeros[$i]->getDni();
+        while ($i<count($pasajeros) && !$bandera) {
+            $eDni=$pasajeros[$i]->getNumDoc();
             if ($dni==$eDni) {
                 $bandera=true;
             }

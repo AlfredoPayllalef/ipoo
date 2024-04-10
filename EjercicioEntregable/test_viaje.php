@@ -13,35 +13,41 @@ $colPasajeros=[$objpasajero1,$objpasajero2,$objpasajero3,$objpasajero4,$objpasaj
 $objResponsable=new responsableV("AL3-045","002-45322","Pereyra");
 $objViaje=new viaje("0034-ML","Cancun",20,$colPasajeros,$objResponsable);
 
-echo "Bienvenido \n\n ingrese una de las opciones deseadas";
+echo "======================Bienvenido====================== \nIngrese una de las opciones deseadas\n";
 
 do {
     echo "Ingrese (1) para modificar los datos de un pasajero \n";
     echo "Ingrese (2) para ingresar un nuevo pasajero \n";
+    echo "Ingrese (3) para ver la coleccion de pasajeros \n";
+    echo "Ingrese (4) para salir \n";
     $valor=trim(fgets(STDIN));
     if ($valor==1) {
         echo "echo ingrese el DNI del pasajero \n";
         $dniPasajero=trim(fgets(STDIN));
         $objPasajero= $objViaje->buscarPersonaPorDni($dniPasajero);
         if ($objPasajero!=null) {
+            echo "=============\n".$objPasajero->__toString()."=============\n";
             echo "ingrese (1) para modificar el nombre \n";
             echo "ingrese (2) para modificar el apellido \n";
-            echo "ingrese (3) para modificar el telefomo \n";
+            echo "ingrese (3) para modificar el telefono \n";
             $cambio=trim(fgets(STDIN));
             if ($cambio==1) {
-                echo "ingrese el nuevo Nombre";
+                echo "ingrese el nuevo Nombre: ";
                 $eNombre=trim(fgets(STDIN));
-                $objPasajero->setNombre($eNombre);
+                $objPasajero->setNombre("$eNombre");
+                echo $objPasajero->__toString();
             }
             if ($cambio==2) {
-                echo "ingrese el nuevo Apellido";
+                echo "ingrese el nuevo Apellido: ";
                 $eApellido=trim(fgets(STDIN));
-                $objPasajero->setApellido($eApellido);
+                $objPasajero->setApellido("$eApellido");
+                echo $objPasajero->__toString();
             }
             if ($cambio==3) {
-                echo "ingrese el nuevo Telefono";
+                echo "ingrese el nuevo Telefono: ";
                 $eTelefono=trim(fgets(STDIN));
-                $objPasajero->setTelefono($eTelefono);
+                $objPasajero->setTelefono("$eTelefono");
+                echo $objPasajero->__toString();
             }
         }
         else {
@@ -58,6 +64,12 @@ do {
         echo "ingrese el numero de telefono: \n";
         $eTelefono=trim(fgets(STDIN));
         $objPasajeroAgregar=new pasajero("$eNombre","$eApellido",$eDni,"$eTelefono");
-        $objViaje->agregarPasajero($objPasajeroAgregar);
+        if ($objViaje->agregarPasajero($objPasajeroAgregar)) {
+            echo "********Se agrego correctamente a:********\n ";
+            echo $objPasajeroAgregar->__toString(); 
+        }
     }
-} while ($valor!=1 && $valor!=2);
+    if ($valor==3) {
+        echo $objViaje->mostrarPasajeros();
+    }
+} while ($valor==1 || $valor==2 ||$valor==3);
