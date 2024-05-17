@@ -1,8 +1,8 @@
 <?php 
-include_once("persona.php");
-include_once("tp1/miCuentaBancaria.php");
+include_once("../tp1/persona.php");
+include_once("../tp1/miCuentaBancaria.php");
 include_once("disquera.php");
-include_once("tp1/miLibro.php");
+include_once("../tp1/miLibro.php");
 include_once("lectura.php");
 //ejerccio1
 $objPersona= new persona("Juancarlos","Perez","DNI",93528112);

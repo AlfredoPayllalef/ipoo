@@ -5,13 +5,19 @@ class viaje{
     private $cantMaxPasajeros;
     private $colObjPasajeros;
     private $objResponsable;
+    //
+    private $costoViaje;
+    private $sumCostos;
 
-    public function __construct($eCodigo,$eDestino,$cantPasajeros,$ePasajeros,$eObjResponsable){
+
+    public function __construct($eCodigo,$eDestino,$cantPasajeros,$ePasajeros,$eObjResponsable,$eCostoViaje,$eSumCostos){
         $this->codigo=$eCodigo;
         $this->destino=$eDestino;
         $this->cantMaxPasajeros=$cantPasajeros;
         $this->colObjPasajeros=$ePasajeros;
         $this->objResponsable=$eObjResponsable;
+        $this->costoViaje=$eCostoViaje;
+        $this->sumCostos=$eSumCostos;
     }
     //metodos de acceso
     public function getCodigo(){
@@ -29,6 +35,12 @@ class viaje{
     public function getObjResponsable(){
         return $this->objResponsable;
     }
+    public function getCostoViaje(){
+        return $this->costoViaje;
+    }
+    public function getSumaCostos(){
+        return $this->sumCostos;
+    }
     //modificadores
     public function setCodigo($eCodigo){
         $this->codigo=$eCodigo;
@@ -44,6 +56,12 @@ class viaje{
     }
     public function setObjResponsable($eObjResponsable){
         $this->objResponsable=$eObjResponsable;
+    }
+    public function setCostoViaje($eCostoViaje){
+        $this->costoViaje=$eCostoViaje;
+    }
+    public function setSumaCosto($eCostoViaje){
+        $this->costoViaje=$eCostoViaje;
     }
     //mostrar pasajeros:
     public function mostrarPasajeros(){
@@ -61,6 +79,8 @@ class viaje{
         $cadena.="La cantidad maxima de pasajeros es:". $this->getCanMaxPasajeros();
         $cadena.="Los pasajeros del viaje son: ". $this->mostrarPasajeros();
         $cadena.="=====================\n Informacion del responsable del viaje: ". $this->getObjResponsable()."\n=====================\n";
+        $cadena.="El costo del viaje es: ". $this->getCostoViaje()."\n";
+        $cadena.="La Suma del costo del Viaje es: ". $this->getSumaCostos()."\n";
         return $cadena;
     }
 
@@ -96,6 +116,29 @@ class viaje{
         if ($bandera==false && $cantMaxima>count($pasajeros)) {
             $pasajeros[]=$objPasajero;
             $this->setColObjPasajeros($pasajeros);
+            $exito=true;
+        }
+        return $exito;
+    }
+    /*venderPasaje($objPasajero) que debe incorporar el pasajero a la colección de pasajeros 
+    //( solo si hay espacio disponible), actualizar los costos abonados y retornar el costo
+     final que deberá ser abonado por el pasajero*/
+    
+     public function venderPasaje($objPasajero){
+        $costoFinal=-1;    
+        if ($this-> agregarPasajero($objPasajero)) {
+            $costo=$this->getCostoViaje();
+            $costoFinal=$costo*$objPasajero->darPorcentajeIncremento();
+            $costoAcumulado=$this->getSumaCostos()+$costoFinal;
+            $this->setSumaCosto($costoAcumulado);
+        }
+        return $costoFinal;
+    }
+    public function hayPasajesDisponible(){
+        $exito=false;
+        $cantMax=$this->getCanMaxPasajeros();
+        $colPasajeros=$this->getColObjPasajeros();
+        if ($cantMax>count($colPasajeros)) {
             $exito=true;
         }
         return $exito;
