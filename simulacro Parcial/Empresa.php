@@ -50,7 +50,7 @@ class Empresa{
         $clientes=$this->getColObjCliente();
         $cadena="------Los Clientes de a Empresa son:------ \n";
         for ($i=0; $i <count($clientes) ; $i++) { 
-            $cadena.="|N".$i."| ".$clientes[$i];
+            $cadena.="|N".$i."| ".$clientes[$i]->__toString();
         }
         return $cadena;
     }
@@ -58,7 +58,7 @@ class Empresa{
         $motos=$this->getColObjMotos();
         $cadena="----Las Motos de a Empresa son:---- \n";
         for ($i=0; $i <count($motos) ; $i++) { 
-            $cadena.="|N".$i."| ".$motos[$i];
+            $cadena.="|N".$i."| ".$motos[$i]->__toString();
         }
         return $cadena;
     }
@@ -66,7 +66,7 @@ class Empresa{
         $ventas=$this->getColVentas();
         $cadena="******Las ventas de la empresa son Empresa son:****** \n";
         for ($i=0; $i <count($ventas) ; $i++) { 
-            $cadena.="|N".$i."| ".$ventas[$i];
+            $cadena.="|N".$i."| ".$ventas[$i]->__toString();
         }
         return $cadena;
     }
@@ -77,6 +77,7 @@ class Empresa{
         $cadena.=$this->mostrarColClientes()."\n";
         $cadena.=$this->mostrarColMotos()."\n";
         $cadena.=$this->mostrarColVentas()."\n";
+        return $cadena;
     }
     public function retornarMoto($codigoMoto){
         $motos=$this->getColObjMotos();
@@ -84,9 +85,9 @@ class Empresa{
         $objMoto=null;
         $a=0;
         while ($a <count($motos) && !$bandera){
-          $codigo=$motos[$i]->getCodigo();
+          $codigo=$motos[$a]->getCodigo();
           if ($codigo==$codigoMoto) {
-            $objMoto=$motos[$i];
+            $objMoto=$motos[$a];
             $bandera=true;
           }
           $a=$a+1;
@@ -96,7 +97,7 @@ class Empresa{
     public function  registrarVenta($colCodigosMoto, $objCliente){
         $motos=$this->getColObjMotos();
         $colMotos=[];
-        $fecha=getdate();
+        $fecha=date("m.d.y");
         $precio=0;
         if ($objCliente->getEstado()){
             $venta=new Venta("10",$fecha,$objCliente,[],0);
@@ -106,8 +107,11 @@ class Empresa{
                  if ($moto!=null) {
                      if ($moto->getActivo()) {
                         $precio=$precio+$moto->darPrecioVenta();
-                         $colMotos[]=$moto;
-                         $venta->setColObjMotos($colMotos);
+                        $colMotos[]=$moto;
+                        $venta->setColObjMotos($colMotos);
+                        $ventasCol=$this->getColVentas();
+                        $ventasCol[]=$venta;
+                        $this->setColVentas($ventasCol);
                      }
                  }
              }
@@ -133,5 +137,24 @@ class Empresa{
           $a=$a+1;
         }
         return $ventasCliente;
+    }
+
+    public function informarSumaVentasNacionales(){
+        $ventasColeccion=$this->getColVentas();
+        $sumaNacional=0;
+        foreach ($ventasColeccion as $venta) {
+            $sumaNacional+=$venta->retornarTotalVentaNacional();
+        }
+        return $sumaNacional;
+    }
+    public function informarVentasImportadas(){
+        $ventasColeccion=$this->getColVentas();
+        $colMotoImportadas=[];
+        foreach ($ventasColeccion as $venta) {
+            if ($venta->retornarMotosImportadas()!=[]) {
+                $colMotoImportadas[]=$venta->retornarMotosImportadas();
+            }
+        }
+        return $colMotoImportadas;
     }
 }

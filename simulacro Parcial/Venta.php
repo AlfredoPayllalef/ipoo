@@ -49,7 +49,7 @@ class Venta{
         $objMotos=$this->getColObjMotos();
         $cadena="";
         for ($i=0; $i <count($objMotos) ; $i++) { 
-            $cadena.="|N°".$i."|".$objMotos->__toString()."|";
+            $cadena.="|N°".$i."|".$objMotos[$i]->__toString()."|";
         }
         return $cadena;
     }
@@ -58,7 +58,8 @@ class Venta{
         $cadena.="Fecha: ". $this->getFecha()."\n";
         $cadena.="================= Datos del Cliente=================\n". $this->getObjCliente()."=================**************=================\n";
         $cadena.="----------------La Coleccion de Motos---------------\n". $this->mostrarColeccionMotos();
-        $cadena.="El precio de la Venta es: ". $this->getPrecio();
+        $cadena.="El precio de la Venta es: ". $this->getPrecio()."\n";
+        return $cadena;
     }
     public function incorporarMoto($objMoto){
         $Cliente=$this->getObjCliente();
@@ -74,5 +75,25 @@ class Venta{
             }
         }
         return $bandera;
+    }
+    public function retornarTotalVentaNacional(){
+        $colMotos=$this->getColObjMotos();
+        $precioNacional=0;
+        foreach ($colMotos as $moto) {
+            if (is_a($moto,'MotoNacional')) {
+                $precioNacional+=$moto->darPrecioVenta();
+            }
+        }
+        return $precioNacional;
+    }
+    public function retornarMotosImportadas(){
+        $colMotos=$this->getColObjMotos();
+        $colImportados=[];
+        foreach ($colMotos as $moto) {
+            if (is_a($moto,"MotoImportada")) {
+                $colImportados[]=$moto;
+            }
+        }
+        return$colImportados;
     }
 }

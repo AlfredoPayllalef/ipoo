@@ -7,8 +7,8 @@ class Cliente{
     private $numDoc;
 
     public function __construct($eNombre,$eApellido,$eEstado,$eTipoDoc,$eNumDoc){
-        $this->$nombre=$eNombre;
-        $this->$apellido=$eApellido;
+        $this->nombre=$eNombre;
+        $this->apellido=$eApellido;
         $this->estado=$eEstado;
         $this->tipoDoc=$eTipoDoc;
         $this->numDoc=$eTipoDoc;
@@ -50,7 +50,7 @@ class Cliente{
         $cadena.="Apellido: ". $this->getApellido()."\n";
         $cadena.="Estado:(true para activo,false para inactivo):". $this->getEstado()."\n";
         $cadena.="Tipo de Documento: ". $this->getTipoDoc();
-        $cadena.="Numero: ". $this->numDoc()."\n";
+        $cadena.="Numero: ". $this->getNumDoc()."\n";
         return $cadena;
     }
 }
