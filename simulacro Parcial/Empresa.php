@@ -48,7 +48,7 @@ class Empresa{
     // funciones Mostrar
     public function mostrarColClientes(){
         $clientes=$this->getColObjCliente();
-        $cadena="------Los Clientes de a Empresa son:------ \n";
+        $cadena="                         ------Los Clientes de a Empresa son:------ \n";
         for ($i=0; $i <count($clientes) ; $i++) { 
             $cadena.="|N".$i."| ".$clientes[$i]->__toString();
         }
@@ -56,7 +56,7 @@ class Empresa{
     }
     public function mostrarColMotos(){
         $motos=$this->getColObjMotos();
-        $cadena="----Las Motos de a Empresa son:---- \n";
+        $cadena="                          ----Las Motos de a Empresa son:---- \n";
         for ($i=0; $i <count($motos) ; $i++) { 
             $cadena.="|N".$i."| ".$motos[$i]->__toString();
         }
@@ -64,7 +64,7 @@ class Empresa{
     }
     public function mostrarColVentas(){
         $ventas=$this->getColVentas();
-        $cadena="******Las ventas de la empresa son Empresa son:****** \n";
+        $cadena="                         ******Las ventas de la empresa son Empresa son:****** \n";
         for ($i=0; $i <count($ventas) ; $i++) { 
             $cadena.="|N".$i."| ".$ventas[$i]->__toString();
         }
@@ -72,7 +72,7 @@ class Empresa{
     }
     //Funcion toString()
     public function __toString(){
-        $cadena="****|Denominacion de la Empresa****|: ". $this->getDenominacion()."\n";
+        $cadena="                    ****|Denominacion de la Empresa****|: ". $this->getDenominacion()."\n";
         $cadena.="La direccion: ". $this->getDireccion()."\n";
         $cadena.=$this->mostrarColClientes()."\n";
         $cadena.=$this->mostrarColMotos()."\n";
@@ -105,10 +105,11 @@ class Empresa{
                 $codigo=$colCodigosMoto[$i];
                  $moto=$this->retornarMoto($codigo);
                  if ($moto!=null) {
-                     if ($moto->getActivo()) {
-                        $precio=$precio+$moto->darPrecioVenta();
+                     if ($venta->incorporarMoto($moto)) {
+                        $precio=$venta->getPrecio();
+                        /*$precio+$moto->darPrecioVenta();
                         $colMotos[]=$moto;
-                        $venta->setColObjMotos($colMotos);
+                        $venta->setColObjMotos($colMotos);*/
                         $ventasCol=$this->getColVentas();
                         $ventasCol[]=$venta;
                         $this->setColVentas($ventasCol);

@@ -24,10 +24,10 @@ $eColMotos=[$objMoto1,$objMoto2,$objMoto3,$objMoto4];
 $objEmpresa=new Empresa("Alta Gama","Av Argenetina 123",$eColClientes,$eColMotos,[]);
 
 echo "\n El precio de la venta 1 es: ";
-echo $objEmpresa->registrarVenta([11,12,13,14], $objCliente2);
+ $objEmpresa->registrarVenta([11,12,13,14], $objCliente2);
 echo "\n-------------------------------------------------------\n";
 
-
+/*
 echo "\nEl precio de la venta 2 es: ";
 echo $objEmpresa->registrarVenta([13,14], $objCliente2);
 echo "\n-------------------------------------------------------\n";
@@ -35,13 +35,16 @@ echo "\n-------------------------------------------------------\n";
 echo "\n El precio de la venta 3 es: ";
 echo $objEmpresa->registrarVenta([14,2], $objCliente2);
 echo "\n-------------------------------------------------------\n";
-$ventaImportada=$objEmpresa->informarVentasImportadas();
 
+/*$ventaImportada=$objEmpresa->informarVentasImportadas();
+print_r($ventaImportada);
 
 echo "la suma de ventas nacionales es:";
 echo $objEmpresa->informarSumaVentasNacionales();
 
-echo $objEmpresa;
+*/
+echo $objEmpresa->mostrarColVentas();
+
 
 
 

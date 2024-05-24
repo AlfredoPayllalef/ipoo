@@ -49,7 +49,7 @@ class Venta{
         $objMotos=$this->getColObjMotos();
         $cadena="";
         for ($i=0; $i <count($objMotos) ; $i++) { 
-            $cadena.="|N°".$i."|".$objMotos[$i]->__toString()."|";
+            $cadena.="                 |N°".$i."|".$objMotos[$i]->__toString()."|";
         }
         return $cadena;
     }
@@ -62,10 +62,8 @@ class Venta{
         return $cadena;
     }
     public function incorporarMoto($objMoto){
-        $Cliente=$this->getObjCliente();
         $colMotosVenta=$this->getColObjMotos();
         $bandera=false;
-        if ($objCliente->getEstado()) {
             if ($objMoto->getActivo()) {
                 $colMotosVenta[]=$objMoto;
                 $this->setColObjMotos($colMotosVenta);
@@ -73,7 +71,6 @@ class Venta{
                 $this->setPrecio($precio);
                 $bandera=true;
             }
-        }
         return $bandera;
     }
     public function retornarTotalVentaNacional(){
